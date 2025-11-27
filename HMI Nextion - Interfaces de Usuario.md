@@ -88,14 +88,138 @@ La interfaz principal funciona como centro de control del sistema, permitiendo l
 4. **Condición STOP** → Estado 3 con indicador activo
 
 ---
-
 ### Interfaz 2: Calibración Home
-*(Descripción pendiente)*
-![Interfaz 2](interfaces/4.png)
+
+#### Descripción General
+Interfaz especializada para la calibración del sistema Home, permite configurar parámetros de posición y seguridad para el correcto funcionamiento del equipo.
+
+#### Estados de la Interfaz
+
+**Estado 1: Configuración Inicial**
+- **Archivo**: `4.png`
+- **Descripción**: Estado inicial de configuración de parámetros
+- **Elementos Visuales**:
+  - Título "CALIBRACIÓN HOME"
+  - Campos de distancia para ejes X, Y, Z (en mm)
+  - Parámetros "Debounce" y "Separación"
+  - Botón "GUARDAR" y "RESET"
+  - Botón de herramientas (HOME) en estado normal
+- **Comportamiento**:
+  - Campos editables para ingreso de valores
+  - Botón de herramientas disponible para iniciar calibración
+  - Navegación restringida hasta completar el proceso
+
+![Estado 1 - Configuración Inicial](interfaces/4.png)
+
+**Estado 2: Calibración Activa con STOP**
+- **Archivo**: `5.png`
+- **Descripción**: Estado durante proceso de calibración con opción de emergencia
+- **Elementos Visuales**:
+  - Indicador "STOP!" prominente
+  - Botón de herramientas activo en color verde
+  - Botón "STOP" en color rojo
+  - Botón "RESET" en color amarillo cuando está presionado
+  - Valores de distancia y parámetros visibles
+- **Comportamiento**:
+  - Calibración en progreso (botón herramientas verde)
+  - Botón "STOP" disponible para interrupción de emergencia
+  - Botón "RESET" para restablecimiento del sistema
+  - Navegación bloqueada durante calibración
+
+![Estado 2 - Calibración Activa](interfaces/5.png)
+
+#### Parámetros Configurables
+- **Distancias de Ejes**:
+  - X: [valor] mm
+  - Y: [valor] mm  
+  - Z: [valor] mm
+- **Parámetros de Seguridad**:
+  - Debounce: [valor] mm
+  - Separación: [valor] mm
+
+#### Funcionalidades Principales
+1. **Configuración de Posición**: Ajuste fino de distancias en ejes X, Y, Z
+2. **Inicio de Calibración**: Activación mediante botón de herramientas
+3. **Parada de Emergencia**: Interrupción inmediata con botón STOP
+4. **Restablecimiento**: Recuperación del sistema con botón RESET
+5. **Persistencia de Datos**: Guardado de configuración
+
+#### Flujo Operativo
+1. **Ingreso de Parámetros** → Estado 1 (Configuración)
+2. **Inicio Calibración** → Estado 2 (Proceso Activo)
+3. **Interrupción STOP** → Estado 2 con STOP activo
+4. **Restablecimiento RESET** → Retorno a Estado 1
+
+#### Indicadores de Estado
+- **🟢 Verde**: Calibración en progreso (botón herramientas)
+- **🔴 Rojo**: Sistema detenido (botón STOP)
+- **🟡 Amarillo**: Reset temporalmente activado
+- **⚪ Normal**: Estado listo para operar
+
+---
+
 
 ### Interfaz 3: Modo Automático
-*(Descripción pendiente)*
-![Interfaz 3](interfaces/5.png)
+
+#### Descripción General
+Interfaz para la ejecución de rutinas automatizadas del sistema, permitiendo seleccionar y controlar diferentes secuencias operativas predefinidas.
+
+#### Estados de la Interfaz
+
+**Estado 1: Selección de Rutina**
+- **Archivo**: `6.png`
+- **Descripción**: Estado inicial para selección de rutinas automatizadas
+- **Elementos Visuales**:
+  - Título "AUTOMATICO"
+  - Botones "Rutina 1" y "Rutina 2" en estado normal
+  - Botón "RESET" disponible
+  - Sin indicador STOP visible
+- **Comportamiento**:
+  - Selección exclusiva de una rutina (Rutina 1 o Rutina 2)
+  - Botón RESET disponible para restablecimiento
+  - Navegación habilitada entre rutinas
+
+![Estado 1 - Selección de Rutina](interfaces/6.png)
+
+**Estado 2: Ejecución con Interrupción**
+- **Archivo**: `7.png`
+- **Descripción**: Estado durante ejecución de rutina con capacidad de interrupción
+- **Elementos Visuales**:
+  - Botón de rutina seleccionada en color verde
+  - Indicador "STOP!" prominente en color rojo
+  - Botón "RESET" en color amarillo cuando está presionado
+  - Rutina no seleccionada en estado normal
+- **Comportamiento**:
+  - Rutina en ejecución (botón en verde)
+  - Botón STOP disponible para interrupción inmediata
+  - Botón RESET para restablecimiento del sistema
+  - Comandos bloqueados durante estado STOP
+
+#### Funcionalidades Principales
+1. **Selección de Rutinas**: Elección entre Rutina 1 y Rutina 2 (exclusiva)
+2. **Ejecución Automatizada**: Puesta en marcha de secuencia seleccionada
+3. **Interrupción de Emergencia**: Parada inmediata con botón STOP
+4. **Restablecimiento**: Recuperación del sistema con botón RESET
+
+#### Flujo Operativo
+1. **Selección de Rutina** → Estado 1 (Selección)
+2. **Inicio Ejecución** → Estado 2 (Rutina Activa en verde)
+3. **Interrupción STOP** → Estado 2 con STOP activo (rojo)
+4. **Restablecimiento RESET** → Retorno a Estado 1
+
+#### Reglas de Operación
+- **Selección Exclusiva**: Solo una rutina puede estar activa simultáneamente
+- **Secuencia de Control**: STOP debe preceder a RESET
+- **Bloqueo de Comandos**: En estado STOP, solo RESET está habilitado
+- **Feedback Visual**: Cambios de color indican estado del sistema
+
+#### Indicadores de Estado
+- **🟢 Verde**: Rutina en ejecución
+- **🔴 Rojo**: Sistema detenido (STOP activo)
+- **🟡 Amarillo**: Reset temporalmente activado
+- **⚪ Normal**: Rutina disponible para selección
+
+---
 
 ### Interfaz 4: Diagnóstico del Sistema
 *(Descripción pendiente)*
