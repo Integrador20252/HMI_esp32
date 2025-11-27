@@ -158,7 +158,6 @@ Interfaz especializada para la calibración del sistema Home, permite configurar
 
 ---
 
-
 ### Interfaz 3: Modo Automático
 
 #### Descripción General
@@ -195,6 +194,8 @@ Interfaz para la ejecución de rutinas automatizadas del sistema, permitiendo se
   - Botón RESET para restablecimiento del sistema
   - Comandos bloqueados durante estado STOP
 
+![Estado 2 - Ejecución con Interrupción](interfaces/7.png)
+
 #### Funcionalidades Principales
 1. **Selección de Rutinas**: Elección entre Rutina 1 y Rutina 2 (exclusiva)
 2. **Ejecución Automatizada**: Puesta en marcha de secuencia seleccionada
@@ -206,6 +207,12 @@ Interfaz para la ejecución de rutinas automatizadas del sistema, permitiendo se
 2. **Inicio Ejecución** → Estado 2 (Rutina Activa en verde)
 3. **Interrupción STOP** → Estado 2 con STOP activo (rojo)
 4. **Restablecimiento RESET** → Retorno a Estado 1
+
+#### Comportamiento con Sistema en STOP
+- **🔴 Botón STOP en rojo**: Indica parada de emergencia activa
+- **🟡 Botón RESET en amarillo**: Indica restablecimiento temporal activo
+- **⚪ Botones de rutina en color inicial**: Rutinas desactivadas durante STOP
+- **Bloqueo de comandos**: Solo RESET disponible durante estado STOP
 
 #### Reglas de Operación
 - **Selección Exclusiva**: Solo una rutina puede estar activa simultáneamente
@@ -222,12 +229,171 @@ Interfaz para la ejecución de rutinas automatizadas del sistema, permitiendo se
 ---
 
 ### Interfaz 4: Diagnóstico del Sistema
-*(Descripción pendiente)*
-![Interfaz 4](interfaces/6.png)
+
+#### Descripción General
+Interfaz de monitoreo en tiempo real que muestra el estado actual de los sensores y parámetros operativos del sistema. Esta pantalla funciona exclusivamente como visualización de datos recibidos desde la ESP32.
+
+#### Estados de la Interfaz
+
+**Estado 1: Sensores Inactivos**
+- **Archivo**: `8.png`
+- **Descripción**: Estado inicial con sensores de posición desactivados
+- **Elementos Visuales**:
+  - Título "DIAGNÓSTICO"
+  - Sección de temperaturas por eje (X, Y, Z) en °C
+  - Velocidad del usillo en RPM
+  - Sensores de posición (Eje X, Y, Z) en estado inactivo
+  - Indicadores de sensor en color normal/desactivado
+- **Comportamiento**:
+  - Visualización de datos en tiempo real
+  - Solo recepción de datos desde ESP32
+  - Sin capacidad de envío de comandos
+
+![Estado 1 - Sensores Inactivos](interfaces/8.png)
+
+**Estado 2: Sensores Activos**
+- **Archivo**: `9.png`
+- **Descripción**: Estado con sensores de posición activados y verificados
+- **Elementos Visuales**:
+  - Título "DIAGNÓSTICO"
+  - Sección de temperaturas por eje (X, Y, Z) en °C
+  - Velocidad del usillo en RPM con formato destacado
+  - Sensores de posición con indicadores de verificación (✅)
+  - Tabla organizada para ejes X, Y, Z
+- **Comportamiento**:
+  - Visualización de estados activos de sensores
+  - Feedback visual inmediato de cambios de estado
+  - Monitoreo continuo sin interacción del usuario
+
+![Estado 2 - Sensores Activos](interfaces/9.png)
+
+#### Parámetros Monitoreados
+- **Temperaturas del Sistema**:
+  - Temp X: [valor] °C
+  - Temp Y: [valor] °C
+  - Temp Z: [valor] °C
+- **Velocidad Operativa**:
+  - Usillo: [valor] RPM
+- **Estado de Sensores de Posición**:
+  - Eje X: Inactivo/Activo ✅
+  - Eje Y: Inactivo/Activo ✅
+  - Eje Z: Inactivo/Activo ✅
+
+#### Funcionalidades Principales
+1. **Monitoreo de Temperatura**: Seguimiento en tiempo real de temperaturas por eje
+2. **Control de Velocidad**: Visualización de RPM del usillo
+3. **Estado de Sensores**: Indicación visual de activación/desactivación
+4. **Recepción de Datos**: Comunicación unidireccional desde ESP32
+
+#### Características de Comunicación
+- **🔻 Solo Recepción**: La interfaz exclusivamente recibe datos
+- **📊 Actualización en Tiempo Real**: Datos refrescados continuamente
+- **🚫 Sin Interacción**: No envía comandos al sistema
+- **👁️ Visualización**: Propósito exclusivo de monitoreo
+
+#### Indicadores de Estado
+- **✅ Verde**: Sensor de posición activo
+- **⚪ Normal/Desactivado**: Sensor de posición inactivo
+- **📋 Tabla Organizada**: Presentación estructurada de estados
+
+#### Flujo de Datos
+1. **ESP32 → HMI**: Envío continuo de datos de sensores
+2. **HMI → Visualización**: Actualización de indicadores en pantalla
+3. **Cambio de Estado**: Transición entre Estados 1 y 2 según datos recibidos
+
+---
+
 
 ### Interfaz 5: Operación Manual
-*(Descripción pendiente)*
-![Interfaz 5](interfaces/7.png)
+
+#### Descripción General
+Interfaz para control manual de los ejes del sistema, permitiendo ajustes incrementales de posición mediante comandos JOG con control de velocidad personalizable.
+
+#### Estados de la Interfaz
+
+**Estado 1: Operación Normal**
+- **Archivo**: `10.png`
+- **Descripción**: Estado operativo para control manual de ejes
+- **Elementos Visuales**:
+  - Título "OPERACIÓN MANUAL"
+  - Campo "Velocidad JOG" en Hertz para configuración
+  - Coordenadas actuales para ejes X, Y, Z (en mm)
+  - Botones "+" y "-" para cada eje
+  - Botones STOP y RESET en estado normal
+- **Comportamiento**:
+  - Configuración de velocidad JOG mediante entrada numérica
+  - Control incremental/decremental de posición por eje
+  - Visualización en tiempo real de coordenadas
+  - Navegación completa habilitada
+
+![Estado 1 - Operación Normal](interfaces/10.png)
+
+**Estado 2: Sistema en STOP**
+- **Archivo**: `11.png`
+- **Descripción**: Estado de interrupción con parada de emergencia activa
+- **Elementos Visuales**:
+  - Indicador "STOP!" prominente en color rojo
+  - Velocidad JOG mostrada en mm/min
+  - Coordenadas actuales para ejes X, Y, Z (en mm)
+  - Botón STOP en color rojo activo
+  - Botón RESET en color amarillo cuando está presionado
+- **Comportamiento**:
+  - Comandos JOG bloqueados durante estado STOP
+  - Solo botón RESET habilitado para restablecimiento
+  - Visualización de coordenadas mantiene valores actuales
+  - Velocidad JOG convertida a mm/min para referencia
+
+![Estado 2 - Sistema en STOP](interfaces/11.png)
+
+#### Parámetros Configurables
+- **Velocidad JOG**: [valor] Hertz (configuración de incremento)
+- **Coordenadas Actuales**:
+  - Eje X: [valor] mm
+  - Eje Y: [valor] mm
+  - Eje Z: [valor] mm
+
+#### Funcionalidades Principales
+1. **Control de Velocidad JOG**: Configuración del incremento/decremento por paso
+2. **Movimiento por Eje**: Control independiente para ejes X, Y, Z
+3. **Incremento/Decremento**: Botones "+" y "-" para cada eje
+4. **Parada de Emergencia**: Interrupción inmediata con botón STOP
+5. **Restablecimiento**: Recuperación del sistema con botón RESET
+
+#### Control de Movimiento por Eje
+- **Eje X**: 
+  - ➕ Botón "+": Incrementa coordenada según valor JOG
+  - ➖ Botón "-": Decrementa coordenada según valor JOG
+- **Eje Y**:
+  - ➕ Botón "+": Incrementa coordenada según valor JOG
+  - ➖ Botón "-": Decrementa coordenada según valor JOG
+- **Eje Z**:
+  - ➕ Botón "+": Incrementa coordenada según valor JOG
+  - ➖ Botón "-": Decrementa coordenada según valor JOG
+
+#### Flujo Operativo
+1. **Configuración JOG** → Ingreso de valor de velocidad
+2. **Control Manual** → Pulsación de botones +/- por eje
+3. **Interrupción STOP** → Estado 2 con comandos bloqueados
+4. **Restablecimiento RESET** → Retorno a Estado 1
+
+#### Comportamiento con Sistema en STOP
+- **🔴 Botón STOP en rojo**: Indica parada de emergencia activa
+- **🟡 Botón RESET en amarillo**: Indica restablecimiento temporal activo
+- **🚫 Botones JOG bloqueados**: Comandos +/- deshabilitados durante STOP
+- **📊 Coordenadas visibles**: Valores actuales mantienen visualización
+
+#### Conversión de Unidades
+- **Configuración**: Hertz → Define frecuencia de incremento
+- **Visualización STOP**: mm/min → Velocidad lineal de referencia
+- **Coordenadas**: mm → Unidad estándar de posición
+
+#### Indicadores de Estado
+- **🟢 Operativo**: Sistema listo para control manual
+- **🔴 STOP**: Parada de emergencia activa (comandos bloqueados)
+- **🟡 RESET**: Restablecimiento temporal en proceso
+- **⚪ Normal**: Estado inicial listo para operar
+
+---
 
 ### Interfaz 6: Panel de Alertas
 *(Descripción pendiente)*
