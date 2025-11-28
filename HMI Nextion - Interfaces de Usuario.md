@@ -395,38 +395,6 @@ Interfaz para control manual de los ejes del sistema, permitiendo ajustes increm
 
 ---
 
-### Interfaz 6: Panel de Alertas
-*(Descripción pendiente)*
-![Interfaz 6](interfaces/8.png)
-
-### Interfaz 7: Configuración Avanzada
-*(Descripción pendiente)*
-![Interfaz 7](interfaces/9.png)
-
-### Interfaz 8: Monitoreo en Tiempo Real
-*(Descripción pendiente)*
-![Interfaz 8](interfaces/10.png)
-
-### Interfaz 9: Histórico de Eventos
-*(Descripción pendiente)*
-![Interfaz 9](interfaces/11.png)
-
-### Interfaz 10: Ajustes de Parámetros
-*(Descripción pendiente)*
-![Interfaz 10](interfaces/12.png)
-
-### Interfaz 11: Estado del Sistema
-*(Descripción pendiente)*
-![Interfaz 11](interfaces/13.png)
-
-### Interfaz 12: Configuración de Red
-*(Descripción pendiente)*
-![Interfaz 12](interfaces/14.png)
-
-### Interfaz 13: Acerca del Sistema
-*(Descripción pendiente)*
-![Interfaz 13](interfaces/15.png)
-
 ## Estructura de Archivos
 
 from machine import I2C, Pin, UART, ADC
